@@ -1,1 +1,1 @@
-# sand
+My sister wanted a falling sand game, and she likes pastel tones, so I thought this would be a nice thing for her! The js was so complex tho! Thankfully, I had a tutorial for the js part, exen though I tweaked it a bunch to my liking. I did not know that I could do smth like this lowkey, pretty surprised with myself!

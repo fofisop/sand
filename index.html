@@ -33,6 +33,79 @@ let rows = height / w;
 let grid = Array.from({ length: cols }, () => Array(rows).fill(0));
 let selectedColor = '#FFB7B2';
 
+
+
+
+
+
+
+
+function update() {
+    let nextGrid = Array.from({ length: cols }, () => Array(rows).fill(0));
+
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            let state = grid[i][j];
+                 if (state !== 0) {
+         if (j < rows - 1) {
+                    let below = grid[i][j + 1];
+                    let dir = Math.random() < 0.5 ? -1 : 1;
+                 let belowA = (i + dir >= 0 && i + dir < cols) ? grid[i + dir][j + 1] : -1;
+                    let belowB = (i - dir >= 0 && i - dir < cols) ? grid[i - dir][j + 1] : -1;
+
+              if (below === 0) nextGrid[i][j + 1] = state;
+                     else if (belowA === 0) nextGrid[i + dir][j + 1] = state; 
+                      else if (belowB === 0) nextGrid[i - dir][j + 1] = state;
+                       else nextGrid[i][j] = state;
+                        } else {
+                    nextGrid[i][j] = state;
+                      }
+            }
+        }
+    }
+   grid = nextGrid;
+}
+
+
+    function render (){
+         ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+            if (grid[i][j] !== 0) {
+                ctx.fillStyle = grid[i][j];
+                ctx.fillRect(i * w, j * w, w, w);
+            }
+        }
+    }
+    update();
+    requestAnimationFrame(render);
+}
+canvas.addEventListener('mousemove', (e) => {
+        if (e.buttons === 1) {
+            let x = Math.floor(e.offsetX / w);
+        let y = Math.floor(e.offsetY / w);
+             if (x >= 0 && x < cols && y >= 0 && y < rows) grid[x][y] = selectedColor;
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+document.querySelectorAll('.color-btn').forEach(btn => {
+    btn.onclick = () => selectedColor = btn.getAttribute('data-color');
+});
+
+render();
+    
     </script>
 </body>
 </html>
+
