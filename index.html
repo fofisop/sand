@@ -1,13 +1,17 @@
 
 <html>
 <head>
-    <title>Pastel Sand Game</title>
+    <title>Pastel Sand Drop</title>
     <style>
     body { background: #f0f0f0; display: flex; flex-direction: column; align-items: center; }
  canvas { border: 2px solid #ddd; background: white; cursor: crosshair; }
 #hotbar { display: flex; gap: 10px; margin-top: 15px; }
-.color-btn { width: 50px; height: 50px; border: 2px solid white; border-radius: 8px; cursor: pointer; }
+.color-btn { width: 50px; height: 50px; border: 2px solid white; border-radius: 8px; cursor: pointer;}
 .color-btn.active { border-color: #555; }
+body{
+    background-image: url(pas.jpeg);
+     font-family: 'Comfortaa';
+}
 </style>
 
 </head>
@@ -17,10 +21,14 @@
     
         <button class="color-btn" data-color="#FFB7B2" style="background:#FFB7B2"></button>
         <button class="color-btn" data-color="#FFDAC1" style="background:#FFDAC1"></button>
-        <button class="color-btn" data-color="#E2F0CB" style="background:#E2F0CB"></button>
+        <button class="color-btn" data-color="#FFF8BF" style="background:#FFF8BF"></button>
         <button class="color-btn" data-color="#B5EAD7" style="background:#B5EAD7"></button>
         <button class="color-btn" data-color="#C7CEEA" style="background:#C7CEEA"></button>
+        <button id="eraser" class="color-btn" style="background:#fff; border: 2px dashed #ccc;">Eraser </button>
     </div>
+
+
+
     
     <script>
         const canvas = document.getElementById('sandCanvas');
@@ -91,6 +99,27 @@ canvas.addEventListener('mousemove', (e) => {
 
 
 
+
+document.getElementById('eraser').onclick = () => {
+    selectedColor = 0; 
+};
+canvas.addEventListener('mousemove', (e) => {
+    if (e.buttons === 1) {
+         let x = Math.floor(e.offsetX / w);
+        let y = Math.floor(e.offsetY / w);
+          if (x >= 0 && x < cols && y >= 0 && y < rows) {
+            grid[x][y] = selectedColor;
+        }
+    }
+});
+
+document.querySelectorAll('.color-btn, #eraser').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.color-btn, #eraser').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+               selectedColor = this.id === 'eraser' ? 0 : this.getAttribute('data-color');
+    });
+});
 
 
 
